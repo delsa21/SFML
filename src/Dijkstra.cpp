@@ -2,66 +2,72 @@
 #include <iostream>
 using namespace std;
 
+// Constructor de la clase Dijkstra
 Dijkstra::Dijkstra() {}
 
+// Método para agregar una arista entre dos nodos con un peso asociado
 void Dijkstra::addEdge(int u, int v, int weight) {
-    adjList[u].push_back({v, weight});
-    adjList[v].push_back({u, weight}); // Grafos sin dirección
+    adjList[u].push_back({v, weight}); // Agrega el vecino v con su peso a la lista de adyacencia de u
+    adjList[v].push_back({u, weight}); // Para grafos no dirigidos, agrega la conexión inversa
 }
 
+// Método para encontrar el camino más corto desde un nodo inicial y renderizar el grafo
 void Dijkstra::findShortestPath(int startNode, sf::RenderWindow& window) {
-    unordered_map<int, int> distances;
-    unordered_map<int, bool> visited;
+    unordered_map<int, int> distances; // Almacena las distancias mínimas desde el nodo inicial
+    unordered_map<int, bool> visited; // Rastrea los nodos ya procesados
 
-    // Inicializa distancias al infinito
+    // Inicializa las distancias al infinito
     for (auto& node : adjList) {
         distances[node.first] = numeric_limits<int>::max();
     }
-    distances[startNode] = 0;
+    distances[startNode] = 0; // La distancia al nodo inicial es 0
 
-    // Min-heap to get the next closest node
+    // Min-heap (cola de prioridad) para seleccionar el nodo más cercano
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, startNode}); // {Distance, Node}
+    pq.push({0, startNode}); // {Distancia, Nodo}
 
     while (!pq.empty()) {
-        int currentDistance = pq.top().first;
-        int currentNode = pq.top().second;
+        int currentDistance = pq.top().first; // Distancia acumulada del nodo actual
+        int currentNode = pq.top().second;   // Nodo actual
         pq.pop();
 
+        // Si el nodo ya fue visitado, lo omitimos
         if (visited[currentNode]) continue;
         visited[currentNode] = true;
 
-        // Update distances for neighbors
+        // Actualiza las distancias para los vecinos del nodo actual
         for (auto& neighbor : adjList[currentNode]) {
-            int nextNode = neighbor.first;
-            int edgeWeight = neighbor.second;
+            int nextNode = neighbor.first;      // Nodo vecino
+            int edgeWeight = neighbor.second;   // Peso de la arista
 
+            // Si encontramos un camino más corto hacia el vecino
             if (!visited[nextNode] && currentDistance + edgeWeight < distances[nextNode]) {
-                distances[nextNode] = currentDistance + edgeWeight;
-                pq.push({distances[nextNode], nextNode});
+                distances[nextNode] = currentDistance + edgeWeight; // Actualiza la distancia
+                pq.push({distances[nextNode], nextNode});           // Agrega el vecino a la cola de prioridad
             }
         }
 
-        // Render the graph after processing each node
+        // Renderiza el grafo después de procesar cada nodo
         renderGraph(window, distances, currentNode);
     }
 }
 
+// Método para renderizar el grafo y mostrar las distancias
 void Dijkstra::renderGraph(sf::RenderWindow& window, const unordered_map<int, int>& distances, int currentNode) {
-    window.clear();
+    window.clear(); // Limpia la ventana
 
-     sf::Font font;
+    sf::Font font;
     if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
         cerr << "Failed to load font DejaVuSans.ttf" << endl;
         return;
     }
 
-    // Dibujamos los nodos y los bordes
+    // Dibuja los nodos y los bordes
     for (auto& node : adjList) {
-        int x = node.first * 50 + 100; // Example x-coordinate
-        int y = 200;                  // Example y-coordinate
+        int x = node.first * 50 + 100; // Coordenada X (ejemplo)
+        int y = 200;                  // Coordenada Y (ejemplo)
 
-        // Dibujamos los bordes
+        // Dibuja los bordes hacia los nodos vecinos
         for (auto& neighbor : node.second) {
             int neighborX = neighbor.first * 50 + 100;
             int neighborY = 200;
@@ -69,16 +75,14 @@ void Dijkstra::renderGraph(sf::RenderWindow& window, const unordered_map<int, in
             window.draw(line, 2, sf::Lines);
         }
 
-        // Dibujamos los nodos
+        // Dibuja el nodo actual
         sf::CircleShape circle(20);
-        circle.setFillColor(node.first == currentNode ? sf::Color::Green : sf::Color::Blue);
+        circle.setFillColor(node.first == currentNode ? sf::Color::Green : sf::Color::Blue); // Nodo actual en verde, otros en azul
         circle.setPosition(x - 20, y - 20);
         window.draw(circle);
 
-        // Dibujamos las distancias
+        // Dibuja la distancia mínima desde el nodo inicial
         sf::Text distanceText;
-        sf::Font font;
-        font.loadFromFile("arial.ttf");
         distanceText.setFont(font);
         distanceText.setString(to_string(distances.at(node.first) == numeric_limits<int>::max() ? -1 : distances.at(node.first)));
         distanceText.setCharacterSize(15);
@@ -87,5 +91,5 @@ void Dijkstra::renderGraph(sf::RenderWindow& window, const unordered_map<int, in
         window.draw(distanceText);
     }
 
-    window.display();
+    window.display(); // Actualiza la ventana
 }
