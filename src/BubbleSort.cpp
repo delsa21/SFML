@@ -1,4 +1,5 @@
 #include "BubbleSort.h"
+#include <iostream>
 
 BubbleSort::BubbleSort(const vector<int>& data) : array(data), currentIndex(0), sorted(false) {}
 
@@ -18,6 +19,11 @@ void BubbleSort::sort() {
 }
 
 void BubbleSort::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float barWidth = window.getSize().x / array.size();
     for (int i = 0; i < array.size(); ++i) {
         sf::RectangleShape bar(sf::Vector2f(barWidth - 2, array[i] * 5));

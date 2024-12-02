@@ -1,4 +1,7 @@
 #include "Queues.h"
+#include <iostream>
+
+using namespace std;
 
 Queue::Queue() : maxSize(10) {}
 
@@ -15,6 +18,11 @@ void Queue::dequeue() {
 }
 
 void Queue::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float boxWidth = 60.0f;
     float boxHeight = 40.0f;
 

@@ -1,4 +1,5 @@
 #include "QuickSort.h"
+#include <iostream>
 
 QuickSort::QuickSort(const vector<int>& data) : array(data), sorted(false) {}
 
@@ -32,6 +33,11 @@ int QuickSort::partition(int low, int high) {
 }
 
 void QuickSort::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float barWidth = window.getSize().x / array.size();
     static int step = 0;
 

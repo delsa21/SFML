@@ -62,14 +62,18 @@ void AVLTree::insert(int value) {
 void AVLTree::renderNode(shared_ptr<AVLNode> node, sf::RenderWindow& window, float x, float y, float xOffset) {
     if (!node) return;
 
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
+
     sf::CircleShape circle(20);
     circle.setFillColor(sf::Color::Green);
     circle.setPosition(x, y);
     window.draw(circle);
 
     sf::Text text;
-    sf::Font font;
-    font.loadFromFile("arial.ttf");
     text.setFont(font);
     text.setString(to_string(node->value));
     text.setCharacterSize(15);

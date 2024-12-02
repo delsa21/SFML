@@ -1,6 +1,8 @@
 #include "BFS.h"
 #include <iostream>
 
+using namespace std;
+
 BFS::BFS() {}
 
 void BFS::addEdge(int u, int v) {
@@ -37,7 +39,7 @@ void BFS::render(sf::RenderWindow& window) {
 
     sf::Font font;
     if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
-        std::cerr << "Failed to load font DejaVuSans.ttf" << std::endl;
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
         return;
     }
 

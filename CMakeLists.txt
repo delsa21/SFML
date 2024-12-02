@@ -21,3 +21,5 @@ target_link_libraries(main sfml-system sfml-window sfml-graphics sfml-audio)
 
 # Copiar la fuente al directorio de construcción
 file(COPY ${CMAKE_SOURCE_DIR}/assets/fonts/arial.ttf DESTINATION ${CMAKE_BINARY_DIR}/assets/fonts)
+
+include_directories(/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1)

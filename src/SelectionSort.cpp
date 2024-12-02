@@ -1,4 +1,6 @@
 #include "SelectionSort.h"
+#include <iostream>
+using namespace std;
 
 SelectionSort::SelectionSort(const std::vector<int>& data) : array(data), currentIndex(0), minIndex(0), sorted(false) {}
 
@@ -20,6 +22,11 @@ void SelectionSort::sort() {
 }
 
 void SelectionSort::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float barWidth = window.getSize().x / array.size();
     for (int i = 0; i < array.size(); ++i) {
         sf::RectangleShape bar(sf::Vector2f(barWidth - 2, array[i] * 5));

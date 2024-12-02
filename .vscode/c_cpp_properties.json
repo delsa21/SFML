@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/include",
                 "/usr/local/include",       // Ruta a SFML
-                "/usr/include",             // Ruta estándar de encabezados
+                "include",             // Ruta estándar de encabezados
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"
             ],
             "defines": [],

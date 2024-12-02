@@ -4,6 +4,8 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+using namespace std;
+
 class Stack {
 public:
     Stack();
@@ -18,7 +20,7 @@ public:
     void render(sf::RenderWindow& window);
 
 private:
-    std::vector<int> data;
+    vector<int> data;
 };
 
 #endif // STACK_H

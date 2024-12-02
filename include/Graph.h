@@ -1,22 +1,28 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <SFML/Graphics.hpp>
-#include <unordered_map>
 #include <vector>
 #include <queue>
 #include <stack>
+#include <SFML/Graphics.hpp>
+
 using namespace std;
 
 class Graph {
 public:
+    Graph();
     void addEdge(int u, int v);
-    void bfs(int startNode, sf::RenderWindow& window);
-    void dfs(int startNode, sf::RenderWindow& window);
+    void dfs(int startNode);
+    void bfs(int startNode);
+    void render(sf::RenderWindow& window);
 
 private:
-    unordered_map<int, vector<int>> adjList;
-    void renderGraph(sf::RenderWindow& window, vector<int>& visitedNodes);
+    vector<vector<int>> adjList;
+    vector<bool> visitedDFS;
+    vector<bool> visitedBFS;
+    stack<int> traversalStack;
+    queue<int> traversalQueue;
+    void dfsVisit(int v);
 };
 
-#endif
+#endif // GRAPH_H

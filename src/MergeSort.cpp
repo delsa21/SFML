@@ -1,4 +1,8 @@
 #include "MergeSort.h"
+#include <iostream>
+
+using namespace std;
+
 
 MergeSort::MergeSort(const std::vector<int>& data) 
     : array(data), tempArray(data.size()), sorted(false), currentLeft(0), currentRight(data.size() - 1), midPoint(0) {}
@@ -43,6 +47,11 @@ void MergeSort::merge(int left, int mid, int right) {
 }
 
 void MergeSort::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float barWidth = window.getSize().x / array.size();
     for (int i = 0; i < array.size(); ++i) {
         sf::RectangleShape bar(sf::Vector2f(barWidth - 2, array[i] * 5));

@@ -1,4 +1,7 @@
 #include "LinkedList.h"
+#include <iostream>
+
+using namespace std;
 
 LinkedList::LinkedList() {}
 
@@ -15,6 +18,11 @@ void LinkedList::remove(int position) {
 }
 
 void LinkedList::render(sf::RenderWindow& window) {
+     sf::Font font;
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return;
+    }
     float boxWidth = 80.0f;
     float boxHeight = 40.0f;
 

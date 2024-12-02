@@ -8,7 +8,12 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 #include "AVLTree.h"
+#include "DFS.h"
+#include "BFS.h"
+#include "Queues.h"
+#include "Stack.h"
 #include "LinkedList.h"
+#include "Graph.h"
 
 using namespace std;
 
@@ -83,6 +88,7 @@ int main() {
     Queue queue;
     Stack stack;
     LinkedList linkedList;
+    Graph graph; graph.addEdge(0, 1); graph.addEdge(0, 2); graph.addEdge(1, 3); graph.addEdge(2, 4);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -163,22 +169,28 @@ int main() {
                         binarySearch.render(window);
                     }
                 }
-            } else if (selectedOption == 4) {
-                displaySubMenu(window, font, "Non-Linear Data Structures", {"1. AVL Tree", "2. DFS", "3. BFS", "Press Esc to return"});
+                        else if (selectedOption == 4) { // Non-Linear Data Structures
+                displaySubMenu(window, font, "Non-Linear Data Structures", {"1. AVL Tree", "2. DFS", "3. BFS", "4. Graph", "Press Esc to return"});
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::Num1) {
                         avlTree.render(window);
                     } else if (event.key.code == sf::Keyboard::Num2) {
-                        dfs.execute();
-                        dfs.render(window);
+                        graph.dfs(0);
+                        graph.render(window);
                     } else if (event.key.code == sf::Keyboard::Num3) {
-                        bfs.execute();
-                        bfs.render(window);
+                        graph.bfs(0);
+                        graph.render(window);
+                    } else if (event.key.code == sf::Keyboard::Num4) {
+                        graph.render(window);
                     }
                 }
             }
+
         }
     }
 
     return 0;
 }
+
+
+
