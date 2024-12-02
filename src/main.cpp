@@ -8,9 +8,6 @@
 #include "MergeSort.h"
 #include "QuickSort.h"
 #include "AVLTree.h"
-#include "Dijkstra.h"
-#include "Queues.h"
-#include "Stacks.h"
 #include "LinkedList.h"
 
 using namespace std;
@@ -61,12 +58,10 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Algorithms and Data Structures Menu");
 
     sf::Font font;
-    if (!font.loadFromFile("/Users/diana/C++/ACT15/assets/fonts/arial.ttf")) {
-    cerr << "Failed to load font arial.ttf" << endl;
-    return 1;
-}
-
-
+    if (!font.loadFromFile("assets/fonts/DejaVuSans.ttf")) {
+        cerr << "Failed to load font DejaVuSans.ttf" << endl;
+        return 1;
+    }
 
     bool inMainMenu = true;
     int selectedOption = -1;
@@ -83,10 +78,8 @@ int main() {
     avlTree.insert(10);
     avlTree.insert(20);
     avlTree.insert(5);
-    Dijkstra graph;
-    graph.addEdge(1, 2, 4);
-    graph.addEdge(1, 3, 2);
-    graph.addEdge(2, 3, 1);
+    DFS dfs;
+    BFS bfs;
     Queue queue;
     Stack stack;
     LinkedList linkedList;
@@ -171,12 +164,16 @@ int main() {
                     }
                 }
             } else if (selectedOption == 4) {
-                displaySubMenu(window, font, "Non-Linear Data Structures", {"1. AVL Tree", "2. Dijkstra's Algorithm", "Press Esc to return"});
+                displaySubMenu(window, font, "Non-Linear Data Structures", {"1. AVL Tree", "2. DFS", "3. BFS", "Press Esc to return"});
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::Num1) {
                         avlTree.render(window);
                     } else if (event.key.code == sf::Keyboard::Num2) {
-                        graph.findShortestPath(1, window);
+                        dfs.execute();
+                        dfs.render(window);
+                    } else if (event.key.code == sf::Keyboard::Num3) {
+                        bfs.execute();
+                        bfs.render(window);
                     }
                 }
             }
